@@ -37,6 +37,7 @@ requires 'Plack::Session', 0.20;
 # CLI
 requires 'Getopt::Long', 2.38;
 requires 'Proclet', 0.31;
+requires 'MySQL::Diff', 0.43;
 
 on develop => sub {
     requires 'Devel::KYTProf';

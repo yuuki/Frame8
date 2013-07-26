@@ -1,0 +1,16 @@
+#!/bin/sh
+
+dbname=$1
+if [ "${dbname}" = '' ] ; then
+  dbname=frame8
+fi
+
+if mysqladmin -uroot create $dbname > /dev/null 2>&1; then
+    echo "Init databases ${dbname}"
+    mysql -uroot $dbname < db/schema.sql
+else
+    echo "Update databases ${dbname}"
+    perl local/bin//mysqldiff $dbname db/schema.sql | tee /dev/fd/2 | mysql -uroot $dbname
+fi
+
+git submodule update --init
