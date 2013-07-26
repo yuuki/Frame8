@@ -111,6 +111,30 @@ Frame8 - My WAF templates
 
 Frame8 is my original WAF templates for Dist::Maker.
 
+Frame8 doesn't has library implementation and has only template implementation expanded to your project directory.
+
+=over 4
+
+=item Frame8                : Web request handling from Plack env.
+
+=item Frame8::Config        : Application global config by Config::ENV.
+
+=item Frame8::Config::Route : Routing config by Router::Simple.
+
+=item Frame8::Context       : Web and CUI common object.
+
+=item Frame8::Views         : Text::Xslate and my utility.
+
+=item Frame8::Engine        : Controller.
+
+=item Frame8::Service       : SQL execution and wrap with Model.
+
+=item Frame8::Model         : Model doesn't execute SQL.
+
+=item Frame8::DBManager     : DBI wrapper
+
+=back
+
 =head1 LICENSE
 
 Copyright (C) y_uuki.
