@@ -1,5 +1,4 @@
 [%- SET css = [
-  "/css/bootstrap.js",
 
   "/css/app.js",
 ] -%]
