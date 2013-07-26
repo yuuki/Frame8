@@ -51,7 +51,7 @@ sub render_string {
 }
 
 sub html {
-    my ($self, $file) = @_;
+    my ($self, $file, $vars) = @_;
 
     my $content = $self->render($file, $vars);
     $self->res->content_type('text/html; charset=utf-8');
