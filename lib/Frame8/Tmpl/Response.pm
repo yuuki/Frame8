@@ -1,4 +1,4 @@
-package Frame8::Response;
+package Frame8::Tmpl::Response;
 use utf8;
 use strict;
 use warnings;

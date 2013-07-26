@@ -23,8 +23,8 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'Frame8',
-    module_name     => 'Frame8',
+    name            => 'Frame8-Tmpl',
+    module_name     => 'Frame8::Tmpl',
     allow_pureperl => 0,
 
     script_files => [glob('script/*'), glob('bin/*')],

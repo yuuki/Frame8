@@ -1,4 +1,4 @@
-package Frame8::Views;
+package Frame8::Tmpl::Views;
 use utf8;
 use strict;
 use warnings;
@@ -9,8 +9,6 @@ our @EXPORT = qw(
     json
     render
     render_string
-    template
-    html_template
 );
 
 use Text::Xslate qw(mark_raw html_escape);
@@ -18,13 +16,13 @@ use JSON::XS;
 use Encode qw(encode_utf8);
 use Path::Class;
 
-use Frame8::Config;
+use Frame8::Tmpl::Config;
 
 my $XSLATE = Text::Xslate->new(
     syntax => 'TTerse',
     cache  => 1,
     path   => [
-        Frame8::Config->root->subdir('templates')
+        Frame8::Tmpl::Config->root->subdir('templates')
     ],
     module => [
         'Text::Xslate::Bridge::TT2Like'

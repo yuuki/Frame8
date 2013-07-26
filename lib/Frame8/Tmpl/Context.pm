@@ -1,4 +1,4 @@
-package Frame8::Context;
+package Frame8::Tmpl::Context;
 use utf8;
 use strict;
 use warnings;
@@ -6,10 +6,10 @@ use v5.14;
 
 use Plack::Session;
 
-use Frame8::Config;
-use Frame8::DBManager;
-use Frame8::Request;
-use Frame8::Views;
+use Frame8::Tmpl::Config;
+use Frame8::Tmpl::DBManager;
+use Frame8::Tmpl::Request;
+use Frame8::Tmpl::Views;
 
 use Class::Accessor::Lite::Lazy (
     new => 1,
@@ -34,7 +34,7 @@ sub from_env {
 
 sub _build_request {
     my $self = shift;
-    return Frame8::Request->new($self->env);
+    return Frame8::Tmpl::Request->new($self->env);
 }
 
 sub _build_response {
@@ -44,7 +44,7 @@ sub _build_response {
 
 sub _build_route {
     my $self = shift;
-    return Frame8::Config->router->match($self->env);
+    return Frame8::Tmpl::Config->router->match($self->env);
 }
 
 sub _build_session {
@@ -53,7 +53,7 @@ sub _build_session {
 }
 
 sub _build_db {
-    return Frame8::DBManager->new;
+    return Frame8::Tmpl::DBManager->new;
 }
 
 sub dbh {
@@ -63,12 +63,12 @@ sub dbh {
 
 sub error {
     my ($self, $code, $message, %opts) = @_;
-    Frame8::Error->throw(code => $code, message => $message, %opts);
+    Frame8::Tmpl::Error->throw(code => $code, message => $message, %opts);
 }
 
 sub redirect {
     my ($self, $location, %opts) = @_;
-    Frame8::Error->throw(code => 302, location => $location, %opts);
+    Frame8::Tmpl::Error->throw(code => 302, location => $location, %opts);
 }
 
 1;

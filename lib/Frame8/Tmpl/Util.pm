@@ -1,4 +1,4 @@
-package Frame8::Util;
+package Frame8::Tmpl::Util;
 use utf8;
 use strict;
 use warnings;

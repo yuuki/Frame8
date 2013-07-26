@@ -1,4 +1,4 @@
-package Frame8::DBManager;
+package Frame8::Tmpl::DBManager;
 use utf8;
 use strict;
 use warnings;
@@ -8,12 +8,12 @@ use UNIVERSAL::require;
 use Scope::Container::DBI;
 use Class::Accessor::Lite::Lazy new => 1;
 
-use Frame8::Config;
-use Frame8::Util;
+use Frame8::Tmpl::Config;
+use Frame8::Tmpl::Util;
 
 sub dbh {
     my ($self, $name) = @_;
-    my $dbconfig = Frame8::Config->param("db.$name") or croak "Not found db config: $name";
+    my $dbconfig = Frame8::Tmpl::Config->param("db.$name") or croak "Not found db config: $name";
     my $dsn  = $dbconfig->{dsn}    or croak 'Not found dsn';
     my $user = $dbconfig->{user}   or croak 'Not found user';
     my $pass = $dbconfig->{passwd} or croak 'Not found passwd';
@@ -25,7 +25,7 @@ sub dbh {
 sub single {
     my ($self, %opts) = @_;
 
-    ($opts{sql}, $opts{bind}) = Frame8::Util::bind_named($opts{sql}, $opts{bind} || {});
+    ($opts{sql}, $opts{bind}) = Frame8::Tmpl::Util::bind_named($opts{sql}, $opts{bind} || {});
 
     $self->single_nonamed(%opts);
 }
@@ -50,7 +50,7 @@ sub single_nonamed {
 sub search {
     my ($self, %opts) = @_;
 
-    ($opts{sql}, $opts{bind}) = Frame8::Util::bind_named($opts{sql}, $opts{bind} || {});
+    ($opts{sql}, $opts{bind}) = Frame8::Tmpl::Util::bind_named($opts{sql}, $opts{bind} || {});
 
     $self->search_nonamed(%opts);
 }

@@ -15,12 +15,12 @@ GetOptions(
 
 $ENV{DEBUG} = 1 unless defined $ENV{DEBUG};
 $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
-$ENV{FRAME8_ACCESS_LOG} = 'log/access_log';
-$ENV{FRAME8_ERROR_LOG}  = 'log/error_log';
+$ENV{FRAME8_TMPL_ACCESS_LOG} = 'log/access_log';
+$ENV{FRAME8_TMPL_ERROR_LOG}  = 'log/error_log';
 
 if ($opts{'enable-kyt-prof'}) {
     require Devel::KYTProf;
-    Devel::KYTProf->namespace_regex(qr/^Frame8?/);
+    Devel::KYTProf->namespace_regex(qr/^Frame8::Tmpl?/);
 }
 
 our $runner = Proclet->new(color => 1);
@@ -28,7 +28,7 @@ our $runner = Proclet->new(color => 1);
 
 $runner->service(
     code => sub {
-        my $plack_runner = Plack::Runner::Frame8->new;
+        my $plack_runner = Plack::Runner::Frame8::Tmpl->new;
         $plack_runner->parse_options(
             '--port' => 3000,
             '--app' => 'script/app.psgi',
@@ -52,7 +52,7 @@ $runner->service(
 $runner->run;
 
 
-package Plack::Runner::Frame8;
+package Plack::Runner::Frame8::Tmpl;
 use strict;
 use warnings;
 use parent 'Plack::Runner';

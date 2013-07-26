@@ -2,7 +2,7 @@
 
 dbname=$1
 if [ "${dbname}" = '' ] ; then
-  dbname=frame8
+  dbname=frame8tmpl
 fi
 
 if mysqladmin -uroot create $dbname > /dev/null 2>&1; then

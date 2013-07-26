@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Frame8",
+   "name" : "Frame8-Tmpl",
    "no_index" : {
       "directory" : [
          "t",

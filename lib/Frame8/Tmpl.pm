@@ -1,4 +1,4 @@
-package Frame8;
+package Frame8::Tmpl;
 use utf8;
 use strict;
 use warnings;
@@ -12,9 +12,9 @@ use Scalar::Util qw(blessed);
 use Scope::Container;
 use Try::Tiny;
 
-use Frame8::Config;
-use Frame8::Context;
-use Frame8::Error;
+use Frame8::Tmpl::Config;
+use Frame8::Tmpl::Context;
+use Frame8::Tmpl::Error;
 
 sub to_app {
     my $class = shift;
@@ -27,7 +27,7 @@ sub to_app {
 sub handle_request {
     my ($class, $env) = @_;
 
-    my $context = Frame8::Context->from_env($env);
+    my $context = Frame8::Tmpl::Context->from_env($env);
     scope_container context => $context if in_scope_container;
 
     my $route = $context->route;
@@ -48,7 +48,7 @@ sub handle_request {
     } catch {
         my $e = $_;
 
-        if (blessed $e && $e->isa('Frame8::Error')) {
+        if (blessed $e && $e->isa('Frame8::Tmpl::Error')) {
             my $res = $context->response;
             $res->code($e->{code});
             $res->header('X-Error-Message' => $e->{message}) if $e->{message};
@@ -101,7 +101,7 @@ __END__
 
 =head1 NAME
 
-Frame8 - My WAF templates
+Frame8::Tmpl - My WAF templates
 
 =head1 SYNOPSIS
 
@@ -109,29 +109,29 @@ Frame8 - My WAF templates
 
 =head1 DESCRIPTION
 
-Frame8 is my original WAF templates for Dist::Maker.
+Frame8::Tmpl is my original WAF templates for Dist::Maker.
 
-Frame8 doesn't has library implementation and has only template implementation expanded to your project directory.
+Frame8::Tmpl doesn't has library implementation and has only template implementation expanded to your project directory.
 
 =over 4
 
-=item Frame8                : Web request handling from Plack env.
+=item Frame8::Tmpl                : Web request handling from Plack env.
 
-=item Frame8::Config        : Application global config by Config::ENV.
+=item Frame8::Tmpl::Config        : Application global config by Config::ENV.
 
-=item Frame8::Config::Route : Routing config by Router::Simple.
+=item Frame8::Tmpl::Config::Route : Routing config by Router::Simple.
 
-=item Frame8::Context       : Web and CUI common object.
+=item Frame8::Tmpl::Context       : Web and CUI common object.
 
-=item Frame8::Views         : Text::Xslate and my utility.
+=item Frame8::Tmpl::Views         : Text::Xslate and my utility.
 
-=item Frame8::Engine        : Controller.
+=item Frame8::Tmpl::Engine        : Controller.
 
-=item Frame8::Service       : SQL execution and wrap with Model.
+=item Frame8::Tmpl::Service       : SQL execution and wrap with Model.
 
-=item Frame8::Model         : Model doesn't execute SQL.
+=item Frame8::Tmpl::Model         : Model doesn't execute SQL.
 
-=item Frame8::DBManager     : DBI wrapper
+=item Frame8::Tmpl::DBManager     : DBI wrapper
 
 =back
 

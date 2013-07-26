@@ -9,10 +9,10 @@ use Path::Class qw(file);
 use Plack::Builder;
 use Plack::Session::Store::DBI;
 
-use Frame8;
-use Frame8::Config;
+use Frame8::Tmpl;
+use Frame8::Tmpl::Config;
 
-my $root = Frame8::Config->root;
+my $root = Frame8::Tmpl::Config->root;
 
 builder {
     enable 'ReverseProxy';
@@ -39,7 +39,7 @@ builder {
         store => Plack::Session::Store::DBI->new(
             get_dbh => sub {
                 DBI->connect(
-                    Frame8::Config->param('db.frame8'),
+                    Frame8::Tmpl::Config->param('db.frame8_tmpl'),
                     'nobody',
                     'nobody',
                 );
@@ -48,5 +48,5 @@ builder {
         )
     );
 
-    Frame8->to_app;
+    Frame8::Tmpl->to_app;
 };
