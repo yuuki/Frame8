@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hatena::Mackerel</title>
+    : my $minjs = cm($c.config, 'env') == 'production' ? '.min.js' : '.js'
+    <script src="<: $c.uri_for('/js/jquery' ~ $minjs) :>"></script>
+    <link rel="stylesheet" href="<: $c.uri_for('/css/bootstrap.css') :>">
+    <link rel="stylesheet" href="<: $c.uri_for('/css/app.css') :>">
+  </head>
+  <body>
+    <p class="error-box"><: $message :></p>
+  </body>
+</html>

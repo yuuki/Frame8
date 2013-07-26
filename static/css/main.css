@@ -1,0 +1,35 @@
+
+.error-header {
+  text-align: right;
+}
+.error-img {
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 150px;
+}
+.error-message {
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 18px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  color: #c09853;
+  text-align: center;
+}
+.error-box {
+  margin: 10px 10px 20px 10px;
+  padding: 5px 10px 5px 35px;
+  background: #fff1e9 url('/img/mackerel-blue.png') no-repeat 7px center;
+  border: 1px solid #EFCFD1;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.5;
+  color: #9b4d51;
+}
+.error-box a {
+  font-weight: normal;
+}

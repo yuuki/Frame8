@@ -1,0 +1,8 @@
+[%- SET css = [
+  "/css/bootstrap.js",
+
+  "/css/app.js",
+] -%]
+[%- FOR c IN css %]
+  <link rel="stylesheet" href="[% c %]">
+[%- END -%]

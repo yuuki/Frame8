@@ -1,11 +1,98 @@
 package Frame8;
-use 5.008005;
+use utf8;
 use strict;
 use warnings;
+use v5.14;
 
 our $VERSION = "0.01";
 
+use Carp ();
+use Module::Load ();
+use Scalar::Util qw(blessed);
+use Scope::Container;
+use Try::Tiny;
 
+use Frame8::Config;
+use Frame8::Context;
+use Frame8::Error;
+
+sub to_app {
+    my $class = shift;
+    return sub {
+        my $env = shift;
+        return $class->handle_request($env);
+    };
+}
+
+sub handle_request {
+    my ($class, $env) = @_;
+
+    my $context = Frame8::Context->from_env($env);
+    scope_container context => $context if in_scope_container;
+
+    my $route = $context->route;
+
+    my ($engine, $action) = split /\s+/, $route->{action};
+
+    try {
+        $class->before_dispatch($context);
+
+        unless ($engine->can($action)) {
+            $context->error(404 => "Not Found action. $action");
+        }
+        Module::Load::load $engine;
+
+        $engine->$action($context);
+
+        $class->after_dispatch($context);
+    } catch {
+        my $e = $_;
+
+        if (blessed $e && $e->isa('Frame8::Error')) {
+            my $res = $context->response;
+            $res->code($e->{code});
+            $res->header('X-Error-Message' => $e->{message}) if $e->{message};
+            $res->content_type('text/plain');
+
+            if (defined $e->{location}) {
+                $res->header('Location' => $e->{location});
+            }
+
+            unless (defined $res->content) {
+                $res->content($e->{message});
+
+                eval {
+                    my $name = $e->{html} || $e->{code} . '.html';
+                    $context->html($name,
+                        message => $e->{message},
+                        %{ $e->{stash} || {} }
+                    );
+                };
+            }
+
+            $res->headers->header(X_Dispatch => $engine);
+
+            return $res->finalize;
+        }
+        else {
+            die $e;
+        }
+    };
+
+    my $res = $context->response;
+
+    $res->headers->header(X_Dispatch => $engine);
+
+    return $res->finalize;
+}
+
+sub before_dispatch {
+    my ($class, $c) = @_;
+}
+
+sub after_dispatch {
+    my ($class, $c) = @_;
+}
 
 1;
 __END__
@@ -14,15 +101,15 @@ __END__
 
 =head1 NAME
 
-Frame8 - It's new $module
+Frame8 - My WAF templates
 
 =head1 SYNOPSIS
 
-    use Frame8;
+    dim init app
 
 =head1 DESCRIPTION
 
-Frame8 is ...
+Frame8 is my original WAF templates for Dist::Maker.
 
 =head1 LICENSE
 
@@ -33,7 +120,7 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-y_uuki E<lt>yuki.tsubo@gmail.comE<gt>
+y_uuki E<lt>yuuki@cpan.orgE<gt>
 
 =cut
 

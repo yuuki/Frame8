@@ -1,0 +1,9 @@
+[%- SET js = [
+  "/js/jquery-1.9.1.min.js",
+  "/js/underscore-min.js",
+
+  "/js/main.js",
+] -%]
+[%- FOR j IN js %]
+<script type="text/javascript" src="[% j %]"></script>
+[%- END -%]
