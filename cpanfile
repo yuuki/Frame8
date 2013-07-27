@@ -36,14 +36,11 @@ requires 'Plack::Middleware::Scope::Container', 0.04;
 requires 'Plack::Middleware::Session', 0.20;
 requires 'Plack::Session', 0.20;
 
-# CLI
-requires 'Getopt::Long', 2.38;
-requires 'Proclet', 0.31;
-requires 'MySQL::Diff', 0.43;
-
 on develop => sub {
     requires 'Devel::KYTProf';
-    requires 'Proclet', 0.31;
+    requires 'DBIx::QueryLog';
+    requires 'Getopt::Long';
+    requires 'Proclet';
 };
 
 suggests 'Data::Validator', 1.03;
@@ -54,6 +51,9 @@ on 'test' => sub {
     requires 'Test::More', 0.98;
     requires 'Test::Class', 0.39;
     requires 'Test::Fatal', 0.010;
+    requires 'Test::Deep', 0.110;
+    requires 'Test::Differences', 0.61;
     requires 'Test::WWW::Mechanize::PSGI', 0.35;
+    requires 'Test::Mock::Guard', 0.09;
 };
 
