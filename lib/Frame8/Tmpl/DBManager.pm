@@ -8,12 +8,12 @@ use UNIVERSAL::require;
 use Scope::Container::DBI;
 use Class::Accessor::Lite::Lazy new => 1;
 
-use Argyle::Proxy::DBI;
+use Frame8::Tmpl::DBI;
 use Frame8::Tmpl::Util;
 
 sub dbh {
     my ($self, $name) = @_;
-    my $dbh = Argyle::Proxy::DBI->connect($name);
+    my $dbh = Frame8::Tmpl::DBI->connect($name);
     $dbh;
 }
 
@@ -68,7 +68,7 @@ sub search_nonamed {
 sub query {
     my ($self, %opts) = @_;
 
-    ($opts{sql}, $opts{bind}) = Argyle::Proxy::Util::bind_named($opts{sql}, $opts{bind} || {});
+    ($opts{sql}, $opts{bind}) = Frame8::Tmpl::Util::bind_named($opts{sql}, $opts{bind} || {});
 
     $self->query_nonamed(%opts);
 }

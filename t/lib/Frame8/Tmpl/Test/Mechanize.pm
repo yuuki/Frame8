@@ -1,4 +1,4 @@
-package Argyle::Proxy::Test::Mechanize;
+package Frame8::Tmpl::Test::Mechanize;
 use utf8;
 use strict;
 use warnings;
@@ -14,7 +14,7 @@ use Class::Accessor::Lite(
     ro => [ qw(context env) ],
 );
 
-use Argyle::Proxy;
+use Frame8::Tmpl;
 
 sub new {
     my ($class, $user) = @_;
@@ -25,7 +25,7 @@ sub new {
         $self->{env} = $env;
 
         my $scope = start_scope_container;
-        my $res = Argyle::Proxy->handle_request($env);
+        my $res = Frame8::Tmpl->handle_request($env);
         $self->{context} = scope_container('context');
 
         return $res;
