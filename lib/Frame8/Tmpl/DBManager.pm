@@ -36,7 +36,7 @@ sub single_nonamed {
     $res or return '';
 
     if ($opts{class}) {
-        bless $res, $opts{class};
+        $opts{class}->new($res);
     } else {
         $res;
     }
@@ -59,12 +59,7 @@ sub search_nonamed {
 
     my $res = $self->dbh($opts{db})->selectall_arrayref($sql, { Slice => {} }, @$bind);
     if ($opts{class}) {
-        [
-            map {
-                bless $_, $opts{class};
-            }
-            @$res
-        ]
+        [ map { $opts{class}->new($_) } @$res ]
     } else {
         $res;
     }
