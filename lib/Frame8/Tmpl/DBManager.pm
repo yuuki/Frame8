@@ -8,17 +8,12 @@ use UNIVERSAL::require;
 use Scope::Container::DBI;
 use Class::Accessor::Lite::Lazy new => 1;
 
-use Frame8::Tmpl::Config;
+use Argyle::Proxy::DBI;
 use Frame8::Tmpl::Util;
 
 sub dbh {
     my ($self, $name) = @_;
-    my $dbconfig = Frame8::Tmpl::Config->param("db.$name") or croak "Not found db config: $name";
-    my $dsn  = $dbconfig->{dsn}    or croak 'Not found dsn';
-    my $user = $dbconfig->{user}   or croak 'Not found user';
-    my $pass = $dbconfig->{passwd} or croak 'Not found passwd';
-
-    my $dbh = Scope::Container::DBI->connect($dsn, $user, $pass, {});
+    my $dbh = Argyle::Proxy::DBI->connect($name);
     $dbh;
 }
 
@@ -73,6 +68,23 @@ sub search_nonamed {
     } else {
         $res;
     }
+}
+
+sub query {
+    my ($self, %opts) = @_;
+
+    ($opts{sql}, $opts{bind}) = Argyle::Proxy::Util::bind_named($opts{sql}, $opts{bind} || {});
+
+    $self->query_nonamed(%opts);
+}
+
+sub query_nonamed {
+    my ($self, %opts) = @_;
+
+    my $sql  = $opts{sql};
+    my $bind = $opts{bind};
+
+    $self->dbh($opts{db})->prepare_cached($sql)->execute(@$bind);
 }
 
 1;
