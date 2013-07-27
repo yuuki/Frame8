@@ -7,6 +7,7 @@ requires 'DateTime::Format::W3CDTF', 0.06;
 requires 'Encode', '2.42_02';
 requires 'Exporter::Lite', 0.02;
 requires 'Module::Load';
+requires 'MouseX::Types', 0.06;
 requires 'Scalar::Util', 1.27;
 requires 'Scope::Container', 0.04;
 requires 'Scope::Container::DBI', 0.08;
