@@ -19,6 +19,7 @@ requires 'UNIVERSAL::require', 0.13;
 
 requires 'DBD::mysql', 4.023;
 requires 'DBI', 1.628;
+requires 'DBIx::Sunny', 0.21;
 
 requires 'Text::Xslate', 2.0009;
 requires 'Text::Xslate::Bridge::TT2Like', 0.00010;
