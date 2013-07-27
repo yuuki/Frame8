@@ -10,7 +10,7 @@ if mysqladmin -uroot create $dbname > /dev/null 2>&1; then
     mysql -uroot $dbname < db/schema.sql
 else
     echo "Update databases ${dbname}"
-    perl local/bin/mysqldiff $dbname db/schema.sql | tee /dev/fd/2 | mysql -uroot $dbname
+    perl script/mysqldiff $dbname db/schema.sql | tee /dev/fd/2 | mysql -uroot $dbname
 fi
 
 git submodule update --init
