@@ -12,9 +12,9 @@ use Scalar::Util qw(blessed);
 use Scope::Container;
 use Try::Tiny;
 
-use Frame8::Tmpl::Config;
 use Frame8::Tmpl::Context;
 use Frame8::Tmpl::Error;
+use Frame8::Tmpl::Logger;
 
 sub to_app {
     my $class = shift;
@@ -68,6 +68,9 @@ sub handle_request {
                         %{ $e->{stash} || {} }
                     );
                 };
+                if ($@) {
+                    WARN $@;
+                }
             }
 
             $res->headers->header(X_Dispatch => $engine);
@@ -75,6 +78,7 @@ sub handle_request {
             return $res->finalize;
         }
         else {
+            CRIT "%s", $e;
             die $e;
         }
     };
